@@ -4,6 +4,7 @@ project(NetworkASIO)
 
 if(WIN32)
     add_compile_options("/std:c++latest")
+    add_compile_options("/D _WIN32_WINNT=0x0601")
 endif(WIN32)
 set(CMAKE_CXX_STANDARD 17)
 
