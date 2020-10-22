@@ -12,6 +12,7 @@ find_package(asio CONFIG REQUIRED)
 
 add_executable(Server
     ${CMAKE_CURRENT_SOURCE_DIR}/server/server.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/common/message.h
 )
 
 target_link_libraries(Server
@@ -21,6 +22,7 @@ target_link_libraries(Server
 
 add_executable(Client
     ${CMAKE_CURRENT_SOURCE_DIR}/client/client.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/common/message.h
 )
 
 target_link_libraries(Client
