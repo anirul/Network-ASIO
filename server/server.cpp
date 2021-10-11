@@ -184,7 +184,8 @@ private:
 			{
 				if (!ec)
 				{
-					std::make_shared<chat_session>(std::move(socket), room_)->start();
+					std::make_shared<chat_session>(
+						std::move(socket), room_)->start();
 				}
 
 				do_accept();

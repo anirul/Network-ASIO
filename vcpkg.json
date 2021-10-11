@@ -1,5 +1,5 @@
 {
-    "name": "NetworkASIO",
+    "name": "networkasio",
     "version-string": "0.1",
     "dependencies": [
         "asio"
