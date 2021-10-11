@@ -1,12 +1,56 @@
+# A version I use this one because of pi.
 cmake_minimum_required(VERSION 3.14)
+
+# Now we can use C++20 as a standard.
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    if(UNIX AND NOT DEFINED VCPKG_TARGET_TRIPLET)
+        set(VCPKG_TARGET_TRIPLET x64-linux)
+    endif()
+    if(WIN32 AND NOT DEFINED VCPKG_TARGET_TRIPLET)
+        set(VCPKG_TARGET_TRIPLET x64-windows)
+    endif()
+    include("~/Documents/GitHub/vcpkg/scripts/buildsystems/vcpkg.cmake")
+endif()
 
 project(NetworkASIO)
 
 if(WIN32)
+    # Standard MSVC flags.
     add_compile_options("/std:c++latest")
-    add_compile_options("/D _WIN32_WINNT=0x0601")
+    add_compile_options("/D _WIN32_WINNT=0x0A00")
+    # This is there to link static in case there is a -static in the variable.
+    if(${VCPKG_TARGET_TRIPLET} MATCHES "-static")
+        string(REPLACE 
+            "/MD"
+            "/MT" 
+            CMAKE_CXX_FLAGS 
+            ${CMAKE_CXX_FLAGS})
+        string(REPLACE 
+            "/MD"
+            "/MT" 
+            CMAKE_CXX_FLAGS_DEBUG 
+            ${CMAKE_CXX_FLAGS_DEBUG})
+        string(REPLACE 
+            "/MD"
+            "/MT" 
+            CMAKE_CXX_FLAGS_RELEASE 
+            ${CMAKE_CXX_FLAGS_RELEASE})
+        string(REPLACE 
+            "/MD"
+            "/MT" 
+            CMAKE_CXX_FLAGS_MINSIZEREL 
+            ${CMAKE_CXX_FLAGS_MINSIZEREL})
+        string(REPLACE 
+            "/MD"
+            "/MT" 
+            CMAKE_CXX_FLAGS_RELWITHDEBINFO
+            ${CMAKE_CXX_FLAGS_RELWITHDEBINFO})
+    endif(${VCPKG_TARGET_TRIPLET} MATCHES "-static")
 endif(WIN32)
-set(CMAKE_CXX_STANDARD 17)
 
 find_package(asio CONFIG REQUIRED)
 

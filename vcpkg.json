@@ -1,0 +1,7 @@
+{
+    "name": "NetworkASIO",
+    "version-string": "0.1",
+    "dependencies": [
+        "asio"
+    ]
+}
